@@ -37,7 +37,7 @@ float AssetTracker::readLatDegrees(){
     return gps.latitudeDegrees;
 }
 
-float AssetTracker::readLonDegress(){
+float AssetTracker::readLonDegrees(){
     return gps.longitudeDegrees;
 }
 
