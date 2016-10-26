@@ -22,7 +22,9 @@ class AssetTracker {
     readXYZmagnitude(void);
   float
     readLat(void),
-    readLon(void);
+    readLatDegrees(void),
+    readLon(void),
+    readLonDegrees(void);
   bool
     gpsFix(void);
   char
@@ -61,8 +63,8 @@ class AssetTracker {
 
 /* Update by K. Townsend (Adafruit Industries) for lighter typedefs, and
  * extended sensor support to include color, voltage and current */
- 
- 
+
+
 
 #ifndef _ADAFRUIT_SENSOR_H
 #define _ADAFRUIT_SENSOR_H
@@ -186,7 +188,7 @@ class Adafruit_Sensor {
   virtual void enableAutoRange(bool enabled) {};
   virtual bool getEvent(sensors_event_t*) = 0;
   virtual void getSensor(sensor_t*) = 0;
-  
+
  private:
   bool _autoRange;
 };
@@ -200,18 +202,18 @@ for the ultimate GPS module!
 Tested and works great with the Adafruit Ultimate GPS module
 using MTK33x9 chipset
     ------> http://www.adafruit.com/products/746
-Pick one up today at the Adafruit electronics shop 
+Pick one up today at the Adafruit electronics shop
 and help support open source hardware & software! -ada
 
-Adafruit invests time and resources providing this open source code, 
-please support Adafruit and open-source hardware by purchasing 
+Adafruit invests time and resources providing this open source code,
+please support Adafruit and open-source hardware by purchasing
 products from Adafruit!
 
-Written by Limor Fried/Ladyada  for Adafruit Industries.  
+Written by Limor Fried/Ladyada  for Adafruit Industries.
 BSD license, check license.txt for more information
 All text above must be included in any redistribution
 ****************************************/
-// Fllybob added lines 34,35 and 40,41 to add 100mHz logging capability 
+// Fllybob added lines 34,35 and 40,41 to add 100mHz logging capability
 
 #ifndef _ADAFRUIT_GPS_H
 #define _ADAFRUIT_GPS_H
@@ -274,9 +276,9 @@ All text above must be included in any redistribution
 // ask for the release and version
 #define PMTK_Q_RELEASE "$PMTK605*31"
 
-// request for updates on antenna status 
-#define PGCMD_ANTENNA "$PGCMD,33,1*6C" 
-#define PGCMD_NOANTENNA "$PGCMD,33,0*6D" 
+// request for updates on antenna status
+#define PGCMD_ANTENNA "$PGCMD,33,1*6C"
+#define PGCMD_NOANTENNA "$PGCMD,33,0*6D"
 
 // how long to wait when we're looking for a response
 #define MAXWAITSENTENCE 5
@@ -284,10 +286,10 @@ All text above must be included in any redistribution
 
 class Adafruit_GPS {
  public:
-  void begin(uint16_t baud); 
+  void begin(uint16_t baud);
 
 #ifdef __AVR__
-  #if ARDUINO >= 100 
+  #if ARDUINO >= 100
     Adafruit_GPS(SoftwareSerial *ser); // Constructor when using SoftwareSerial
   #else
     Adafruit_GPS(NewSoftSerial  *ser); // Constructor when using NewSoftSerial
@@ -300,7 +302,7 @@ class Adafruit_GPS {
   void common_init(void);
 
   void sendCommand(const char *);
-  
+
   void pause(boolean b);
 
   boolean parseNMEA(char *response);
@@ -337,7 +339,7 @@ class Adafruit_GPS {
   uint8_t LOCUS_type, LOCUS_mode, LOCUS_config, LOCUS_interval, LOCUS_distance, LOCUS_speed, LOCUS_status, LOCUS_percent;
  private:
   boolean paused;
-  
+
   uint8_t parseResponse(char *response);
 #ifdef __AVR__
   #if ARDUINO >= 100
@@ -436,7 +438,7 @@ typedef enum
 /* Used with register 0x2A (LIS3DH_REG_CTRL_REG1) to set bandwidth */
 typedef enum
 {
-  LIS3DH_DATARATE_400_HZ     = 0b0111, //  400Hz 
+  LIS3DH_DATARATE_400_HZ     = 0b0111, //  400Hz
   LIS3DH_DATARATE_200_HZ     = 0b0110, //  200Hz
   LIS3DH_DATARATE_100_HZ     = 0b0101, //  100Hz
   LIS3DH_DATARATE_50_HZ      = 0b0100, //   50Hz
@@ -532,7 +534,7 @@ class Adafruit_LIS3DH : public Adafruit_Sensor {
   Adafruit_LIS3DH(void);
   Adafruit_LIS3DH(int8_t cspin);
   Adafruit_LIS3DH(int8_t cspin, int8_t mosipin, int8_t misopin, int8_t sckpin);
-  
+
   bool       begin(uint8_t addr = LIS3DH_DEFAULT_ADDRESS);
 
   void read();
@@ -555,7 +557,7 @@ class Adafruit_LIS3DH : public Adafruit_Sensor {
   int16_t x, y, z;
   float x_g, y_g, z_g;
 
-  
+
  private:
   uint8_t readRegister8(uint8_t reg);
   void writeRegister8(uint8_t reg, uint8_t value);
